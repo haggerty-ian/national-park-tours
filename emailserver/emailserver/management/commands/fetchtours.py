@@ -20,5 +20,12 @@ class Command(BaseCommand):
                 continue
 
             for tour in response.json():
-                print(tour['tour_id'])
+                matching_id_tours = Tour.objects.filter(external_reference_id=int(tour['tour_id']))
+                if len(matching_id_tours) != 0:
+                    old_tour = matching_id_tours.first()
+                    print(f'tour {old_tour.external_reference_id} changed names from {old_tour.name} to {tour["tour_name"]}')
+                    old_tour.delete()
+                
+                tour_model = Tour(name=tour['tour_name'], external_reference_id=tour['tour_id'], facility=facility)
+                tour_model.save()
 
