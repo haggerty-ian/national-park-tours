@@ -12,7 +12,7 @@ class Command(BaseCommand):
         params = {
             "exact": "false",
             "size": "500",
-            "fq": ["entity_type:(tour OR timedentry_tour)", "entity_type:ticketfacility", "entity_type:timedentry"]
+            "fq": ["entity_type:(tour OR timedentry_tour)", "entity_type:ticketfacility"]
         }
         headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36'}
 
