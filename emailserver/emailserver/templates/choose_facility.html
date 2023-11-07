@@ -32,6 +32,11 @@
             {% endfor %}
         </select>
         {% endif %}
+        <br /><br />
+        {% if selected_tour is not None %}
+        <input type="date" id="start-date" min="{{date.today}}" />
+        <input type="date" id="end-date" max="{{date.today}}" />
+        {% endif %}
     </form>
 
 </body>

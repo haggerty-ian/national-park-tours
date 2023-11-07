@@ -18,7 +18,13 @@ def choose_facility(request: HttpRequest):
         tours = facilty.tour_set.all()
         print(f'tours len = {len(tours)}')
         print(f"facility name = {facilty.name}")
-        return HttpResponse(template.render({ 'facilities': facilities, 'selected_facility': facilty, 'tours': tours }, request))
+        tour = None
+        if 'tour' in request.POST:
+            print('got tour')
+            tour_id = request.POST['tour']
+            tour = Tour.objects.get(pk=tour_id)
+
+        return HttpResponse(template.render({ 'facilities': facilities, 'selected_facility': facilty, 'tours': tours, 'selected_tour': tour }, request))
 
 
     return HttpResponse(template.render({ 'facilities': facilities }, request))
