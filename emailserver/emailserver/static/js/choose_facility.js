@@ -1,8 +1,7 @@
 window.addEventListener('load', () => {
-    let element = document.getElementById('facility-select')
-    element.addEventListener('change', (event) => {
+    let elements = document.getElementsByTagName('select')
+    elements.addEventListener('change', (event) => {
         console.log(event)
         event.target.parentElement.submit()
     })
 })
-

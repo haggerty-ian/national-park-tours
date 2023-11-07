@@ -12,9 +12,26 @@
         <select name="facility" id="facility-select">
             <option value="">--Please choose a facility--</option>
             {% for facility in facilities %}
+            {% if facility == selected_facility %}
+            <option selected="true" value="{{facility.id}}">{{facility.name}}</option>
+            {% else %}
             <option value="{{facility.id}}">{{facility.name}}</option>
+            {% endif %}
             {% endfor %}
         </select>
+        <br /><br />
+        {% if tours is not None %}
+        <select name="tour" id="tour-select">
+            <option value="">--Please choose a tour--</option>
+            {% for tour in tours %}
+            {% if tour == selected_tour %}
+            <option selected="true" value="{{tour.id}}">{{tour.name}}</option>
+            {% else %}
+            <option value="{{tour.id}}">{{tour.name}}</option>
+            {% endif %}
+            {% endfor %}
+        </select>
+        {% endif %}
     </form>
 
 </body>
