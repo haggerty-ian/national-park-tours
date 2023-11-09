@@ -2,12 +2,12 @@
 
 <head>
     {% load static %}
-    <script src="{% static 'js/choose_facility.js' %}"></script>
+    <script src="{% static 'js/monitor_tour.js' %}"></script>
 </head>
 
 <body>
 
-    <form action="choose_facility" method="POST">
+    <form action="monitor_tour" method="POST">
         {% csrf_token %}
         <select name="facility" id="facility-select">
             <option value="">--Please choose a facility--</option>
@@ -34,9 +34,10 @@
         {% endif %}
         <br /><br />
         {% if selected_tour is not None %}
-        <input type="date" id="start-date" min="{{date.today}}" />
-        <input type="date" id="end-date" max="{{date.today}}" />
+        <input type="date" name="start-date" id="start-date" min="{{date.today}}" />
+        <input type="date" name="end-date" id="end-date" max="{{date.today}}" />
         {% endif %}
+        <input type="email" id="email" size="30" required />
     </form>
 
 </body>
