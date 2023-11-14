@@ -15,14 +15,14 @@ class Tour(models.Model):
     def __str__(self):
         return self.name
 
-# class TimeSlot(models.Model):
-#     time = models.DateTimeField()
-#     tour = models.ForeignKey(Tour, on_delete=models.CASCADE)
-#     facility = models.ForeignKey(Facility, on_delete=models.CASCADE)
+class TimeSlot(models.Model):
+    time = models.DateField()
+    tour = models.ForeignKey(Tour, on_delete=models.CASCADE)
+    facility = models.ForeignKey(Facility, on_delete=models.CASCADE)
 
-class Monitor(models.Model):
+class MonitorWindow(models.Model):
     email = models.EmailField()
-    start_date = models.DateField(blank=True)
-    end_date = models.DateField(blank=True)
+    start_date = models.DateField(null=True)
+    end_date = models.DateField(null=True)
     tour = models.ForeignKey(Tour, on_delete=models.CASCADE)
     facility = models.ForeignKey(Facility, on_delete=models.CASCADE)

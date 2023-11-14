@@ -7,7 +7,7 @@
 
 <body>
 
-    <form action="monitor_tour" method="POST">
+    <form action="monitor_tour" method="post">
         {% csrf_token %}
         <select name="facility" id="facility-select">
             <option value="">--Please choose a facility--</option>
@@ -20,8 +20,7 @@
             {% endfor %}
         </select>
         <br /><br />
-        {% if tours is not None %}
-        <select name="tour" id="tour-select">
+        <select name="tour" id="tour-select" {% if tours is None %} disabled {% endif %}>
             <option value="">--Please choose a tour--</option>
             {% for tour in tours %}
             {% if tour == selected_tour %}
@@ -31,15 +30,28 @@
             {% endif %}
             {% endfor %}
         </select>
-        {% endif %}
-        <br /><br />
-        {% if selected_tour is not None %}
-        <input type="date" name="start-date" id="start-date" min="{{date.today}}" />
-        <input type="date" name="end-date" id="end-date" max="{{date.today}}" />
-        {% endif %}
-        <input type="email" id="email" size="30" required />
     </form>
-
+    <br /><br />
+    {% if selected_facility and selected_tour %}
+    <form action="submit_monitor" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="facility" value="{{selected_facility.id}}" />
+        <input type="hidden" name="tour" value="{{selected_tour.id }}" />
+        <div>
+            <label for="start-date">Start Date:</label>
+            <input type="date" name="start-date" id="start-date" min="{{date.today}}" />
+            <label for="end-date">End Date:</label>
+            <input type="date" name="end-date" id="end-date" min="{{date.today}}" />
+        </div>
+        <br />
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email" size="30" required />
+        </div>
+        <br />
+        <input type="submit" id="submit" value="Submit" />
+    </form>
+    {% endif %}
 </body>
 
 </html>
