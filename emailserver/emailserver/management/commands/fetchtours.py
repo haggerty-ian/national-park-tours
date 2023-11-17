@@ -3,7 +3,7 @@ import requests
 from emailserver.models import Facility, Tour
 
 class Command(BaseCommand):
-    help = "Fetches all facilities as defined by the NPS"
+    help = "Fetches all tours as defined by the NPS"
 
     def add_arguments(self, parser):
         pass

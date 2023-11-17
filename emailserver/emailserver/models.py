@@ -15,8 +15,8 @@ class Tour(models.Model):
     def __str__(self):
         return self.name
 
-class TimeSlot(models.Model):
-    time = models.DateField()
+class TourDate(models.Model):
+    date = models.DateField()
     tour = models.ForeignKey(Tour, on_delete=models.CASCADE)
     facility = models.ForeignKey(Facility, on_delete=models.CASCADE)
 
