@@ -2,7 +2,7 @@
 ## Running Scripts
 This project defines some custom commands that can be run using Django's manage.py.
 ```
-python3 manage.py fetchtours
+python3 manage.py fetchfacilities
 ```
 
 ## Getting Started
