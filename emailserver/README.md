@@ -8,7 +8,7 @@ python3 manage.py fetchfacilities
 ## Getting Started
 To get your SQLite database up to speed, run:
 ```
-python3 manage.py migrate emailserver
+python3 manage.py migrate
 ```
 
 To fetch relevant data, run the custom commands `fetchfacilities` and `fetchtours`
