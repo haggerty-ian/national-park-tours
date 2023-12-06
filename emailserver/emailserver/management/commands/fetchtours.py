@@ -23,6 +23,8 @@ class Command(BaseCommand):
                 matching_id_tours = Tour.objects.filter(external_reference_id=int(tour['tour_id']))
                 if len(matching_id_tours) != 0:
                     old_tour = matching_id_tours.first()
+                    if old_tour.name == tour["tour_name"]:
+                        continue
                     print(f'tour {old_tour.external_reference_id} changed names from {old_tour.name} to {tour["tour_name"]}')
                     old_tour.delete()
                 
