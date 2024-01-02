@@ -8,13 +8,25 @@ test_response = json.loads("{\r\n    \"results\": [\r\n        {\r\n            
 
 
 class FetchFacilitiesTestCase(TestCase):
+    command = FetchFacilities()
+
     def setUp(self):
         pass
 
-    def test_fetch(self):
-        command = FetchFacilities()
-        command.get_response = mock.MagicMock(return_value=test_response)
+    def test_database_is_modified_by_web_response(self):
+        self.command.get_response = mock.MagicMock(return_value=test_response)
 
-        command.get_facilities()
+        self.command.get_facilities()
 
         self.assertEqual(2, len(Facility.objects.all()))
+
+    def test_database_contains_facilities_from_web_response(self):
+        self.command.get_response = mock.MagicMock(return_value=test_response)
+
+        self.command.get_facilities()
+
+        first_result = Facility.objects.filter(external_reference_id="300003")
+        second_result = Facility.objects.filter(external_reference_id="10089005")
+
+        self.assertEqual(1, len(first_result))
+        self.assertEqual(1, len(second_result))
