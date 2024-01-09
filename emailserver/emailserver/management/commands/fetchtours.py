@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from helpers.fetchtourshelper import FetchTours
+from emailserver.helpers.fetchtourshelper import FetchTours
 
 class Command(BaseCommand):
     help = "Fetches all tours as defined by the NPS"
