@@ -1,7 +1,13 @@
 import requests
 from emailserver.models import Facility
+from io import StringIO
 
 class FetchFacilities:
+    stdout: StringIO
+
+    def __init__(self, stdout: StringIO) -> None:
+        self.stdout = stdout
+
     def get_response(self):
         params = {
             "exact": "false",
@@ -24,7 +30,7 @@ class FetchFacilities:
             matching_id_facilities = Facility.objects.filter(external_reference_id=int(facility['entity_id']))
             if len(matching_id_facilities) != 0:
                 old_facility = matching_id_facilities.first()
-                print(f'faciliy {old_facility.external_reference_id} changed names from {old_facility.name} to {facility["name"]}')
+                self.stdout.write(f'facility {old_facility.external_reference_id} changed names from {old_facility.name} to {facility["name"]}')
                 old_facility.delete()
 
             facility_model = Facility(name=facility['name'], external_reference_id=int(facility["entity_id"]))
