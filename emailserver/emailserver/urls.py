@@ -22,5 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index, name="index"),
     path('monitor_tour', views.monitor_tour, name="monitor_tour"),
-    path('submit_monitor', views.submit_monitor, name="submit_monitor")
+    path('submit_monitor', views.submit_monitor, name="submit_monitor"),
+    path('view_monitors/<int:id>', views.view_monitors, name="view_monitors")
 ]

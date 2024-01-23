@@ -76,7 +76,6 @@ def get_tour(request: HttpRequest):
 
     return tour
         
-    
 def get_facility(request: HttpRequest):
     facility = request.POST.get('facility')
     if facility is not None and facility.isdecimal():
@@ -87,3 +86,18 @@ def get_facility(request: HttpRequest):
         facility = None
 
     return facility
+
+def view_monitors(request: HttpRequest, id: int):
+    email_id = request.path.split('/')[-1]
+    print(email_id)
+    template = loader.get_template("view_monitors.html")
+
+    user_emails = UserEmail.objects.filter(id=id)
+    if len(user_emails) != 0:
+        relevant_monitors = MonitorWindow.objects.filter(email=user_emails[0])
+        summaries = list(map(lambda monitor: f'{monitor.tour.facility.name} - {monitor.tour.name}: {monitor.start_date} - {monitor.end_date}', relevant_monitors))
+    else:
+        summaries = ["not a valid email"]
+
+
+    return HttpResponse(template.render({ 'monitor_summaries': summaries }))
