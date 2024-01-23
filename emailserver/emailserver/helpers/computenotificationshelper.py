@@ -1,20 +1,20 @@
 from emailserver.models import TourDate, MonitorWindow
 
 class ComputeNotifications():
-    def get_changed_tours(self):
+    def get_changed_tour_dates(self):
         
         return TourDate.objects.filter(notification_sent=False)
     
     def compute_notifications(self):
-        changed_tours = self.get_changed_tours()
+        changed_tour_dates = self.get_changed_tour_dates()
 
         notification_sent = False
 
-        for tour in changed_tours:
-            relevant_monitors = MonitorWindow.objects.filter(tour=tour).complex_filter
+        for tour_date in changed_tour_dates:
+            relevant_monitors = MonitorWindow.objects.filter(tour=tour_date.tour)
 
             for monitor in relevant_monitors:
-                if tour.date > monitor.start_date and tour.date < monitor.end_date:
+                if tour_date.date > monitor.start_date and tour_date.date < monitor.end_date:
                     # send notifications
                     notification_sent = True
 
