@@ -15,13 +15,14 @@ class ComputeNotifications():
         changed_tour_dates = self.get_changed_tour_dates()
 
         notification_sent = False
-
+        activated_emails = set()
+        
         for tour_date in changed_tour_dates:
             relevant_monitors = MonitorWindow.objects.filter(tour=tour_date.tour)
 
             for monitor in relevant_monitors:
                 if tour_date.date > monitor.start_date and tour_date.date < monitor.end_date:
-                    self.stdout.write('sending notification')
+                    activated_emails.add(monitor.email)
                     notification_sent = True
 
         return notification_sent

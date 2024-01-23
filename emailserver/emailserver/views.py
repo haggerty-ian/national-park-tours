@@ -1,7 +1,7 @@
 from django.http import HttpResponse, HttpRequest
 from django.template import loader
 from django.core.exceptions import ValidationError
-from emailserver.models import Facility, Tour, MonitorWindow
+from emailserver.models import Facility, Tour, MonitorWindow, UserEmail
 
 def index(request):
     html = "<html><body>Hello, World.</body></html>"
@@ -51,7 +51,14 @@ def submit_monitor(request: HttpRequest):
         result_message = "failed to submit all fields"
     else:
         try:
-            monitor_window = MonitorWindow(email=email, start_date=start_date, end_date=end_date, facility=facility, tour=tour)
+            user_emails = UserEmail.objects.filter(email=email)
+            if len(user_emails) == 0:
+                user_email = UserEmail(email=email)
+                user_email.save()
+            else:
+                user_email = user_emails[0]
+
+            monitor_window = MonitorWindow(email=user_email, start_date=start_date, end_date=end_date, tour=tour)
             monitor_window.save()
             result_message = 'successfully saved monitor window'
         except ValidationError as e:
