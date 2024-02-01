@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 
+
 class Facility(models.Model):
     name = models.TextField(unique=True)
     external_reference_id = models.IntegerField(unique=True)
@@ -8,6 +9,7 @@ class Facility(models.Model):
 
     def __str__(self):
         return self.name
+    
 
 class Tour(models.Model):
     name = models.TextField()
@@ -18,14 +20,17 @@ class Tour(models.Model):
     def __str__(self):
         return self.name
 
+
 class TourDate(models.Model):
     date = models.DateField()
     tour = models.ForeignKey(Tour, on_delete=models.CASCADE)
     notification_sent = models.BooleanField(default=False)
     facility = models.ForeignKey(Facility, on_delete=models.CASCADE)
 
+
 class UserEmail(models.Model):
     email = models.EmailField(unique=True)
+
 
 class MonitorWindow(models.Model):
     email = models.ForeignKey(UserEmail, on_delete=models.DO_NOTHING)
