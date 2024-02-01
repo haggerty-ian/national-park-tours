@@ -34,3 +34,4 @@ class MonitorWindow(models.Model):
     start_date = models.DateField(null=True)
     end_date = models.DateField(null=True)
     tour = models.ForeignKey(Tour, on_delete=models.CASCADE)
+        

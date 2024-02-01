@@ -1,6 +1,7 @@
 from emailserver.models import TourDate, MonitorWindow
 from io import StringIO
 
+
 class ComputeNotifications():
     stdout: StringIO
 
@@ -16,14 +17,20 @@ class ComputeNotifications():
 
         notification_sent = False
         activated_emails = set()
-        
+
         for tour_date in changed_tour_dates:
-            relevant_monitors = MonitorWindow.objects.filter(tour=tour_date.tour)
+            relevant_monitors = MonitorWindow.objects \
+                .filter(tour=tour_date.tour)
 
             for monitor in relevant_monitors:
-                if tour_date.date > monitor.start_date and tour_date.date < monitor.end_date:
-                    activated_emails.add(monitor.email)
+                if tour_date.date > monitor.start_date \
+                      and tour_date.date < monitor.end_date:
+                    self.stdout.write(f"monitor {monitor} activated with email {monitor.email.id}")
+                    print(f"monitor {monitor} activated with email {monitor.email.id}")
+                    activated_emails.add(monitor.email.id)
                     notification_sent = True
+
+        print(activated_emails)
 
         return notification_sent
 
