@@ -18,13 +18,15 @@ class ComputeNotificationsTestCase(TestCase):
         self.test_tour.save()
         self.test_email = UserEmail(email="testuser@gmail.com")
         self.test_email.save()
+        self.second_test_email = UserEmail(email="secondtestuser@gmail.com")
+        self.second_test_email.save()
 
     def test_tour_date_default_false(self):
         test_tour_date = TourDate(date=date.today(), tour=self.test_tour)
 
         self.assertFalse(test_tour_date.notification_sent)
 
-    def test_notifications_computed(self):
+    def test_notification_computed(self):
         test_tour_date = TourDate(date=date.today(), tour=self.test_tour,
                                   facility=self.test_facility)
         test_tour_date.save()
@@ -36,6 +38,25 @@ class ComputeNotificationsTestCase(TestCase):
         test_monitor_window.save()
 
         self.assertEqual(1, len(self.command.compute_notifications()))
+
+    def test_multiple_notifications_computed(self):
+        test_tour_date = TourDate(date=date.today(), tour=self.test_tour,
+                                  facility=self.test_facility)
+        test_tour_date.save()
+
+        test_monitor_window = MonitorWindow(
+            start_date=date.today() - timedelta(days=1),
+            end_date=date.today() + timedelta(days=1),
+            tour=self.test_tour, email=self.test_email)
+        test_monitor_window.save()
+
+        second_test_monitor_window = MonitorWindow(
+            start_date=date.today() - timedelta(days=1),
+            end_date=date.today() + timedelta(days=1),
+            tour=self.test_tour, email=self.second_test_email)
+        second_test_monitor_window.save()
+
+        self.assertEqual(2, len(self.command.compute_notifications()))
 
     def test_no_duplicate_notifications(self):
         test_tour_date = TourDate(date=date.today(),

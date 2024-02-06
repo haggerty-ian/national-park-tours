@@ -2,6 +2,7 @@ import requests
 from emailserver.models import Facility, Tour
 from io import StringIO
 
+
 class FetchTours():
     stdout: StringIO
 

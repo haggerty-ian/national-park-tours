@@ -3,6 +3,7 @@ from django.core.management import call_command
 from emailserver.models import Facility, Tour
 from io import StringIO
 
+
 class TestCommands(TestCase):
     def test_fetch_facilities(self):
         output = StringIO()

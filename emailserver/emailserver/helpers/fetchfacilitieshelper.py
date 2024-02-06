@@ -2,6 +2,7 @@ import requests
 from emailserver.models import Facility
 from io import StringIO
 
+
 class FetchFacilities:
     stdout: StringIO
 
